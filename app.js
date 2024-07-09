@@ -18,10 +18,11 @@ const Poll = require('./src/models/polls.js');
 
 dotenv.config({ path: "config.env" });
 app.use(
-  cors({
-    origin: "https://voteable-app.onrender.com",
-    credentials: true,
-  })
+    cors({
+        // origin: "https://voteable-app.onrender.com",
+        origin: "http://localhost:5173",
+        credentials: true,
+    })
 );
 
 app.use("/webhook", express.raw({ type: "application/json" }));
@@ -39,14 +40,14 @@ const dbURL = process.env.dbURL;
 
 mongoose.set('strictQuery', true);
 mongoose
-  .connect(dbURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to DB"))
-  .catch((err) => {
-    console.log(err.message);
-  });
+    .connect(dbURL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => console.log("Connected to DB"))
+    .catch((err) => {
+        console.log(err.message);
+    });
 
 // mongoose.set('strictQuery', true);
 // mongoose
@@ -62,5 +63,6 @@ mongoose
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${ PORT }`);
+    console.log(`Server running on port ${ PORT }`);
 });
+
