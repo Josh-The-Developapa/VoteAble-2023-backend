@@ -5,7 +5,16 @@ const optionSchema = new Schema({
   text: {
     type: String,
     required: true,
-    unique: true,
+  },
+  class: {
+    type: String,
+    required: true,
+    unique: false
+  },
+  house: {
+    type: String,
+    required: true,
+    unique: false
   },
   votes: {
     type: Number,
@@ -25,7 +34,7 @@ const pollSchema = new Schema({
   voted: [{ type: String }],
   owner: {
     type: Object,
-    required: true
+    required: true,
   },
   created: {
     type: Date,
@@ -37,8 +46,8 @@ const pollSchema = new Schema({
   },
   house: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const Poll = mongoose.model("Poll", pollSchema);

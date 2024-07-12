@@ -32,31 +32,35 @@ module.exports.changeUsersPasswords = async function (req, res, next) {
 
 // Complete
 module.exports.createPoll = async function (req, res, next) {
+  try {
 
-  if (!req.body.options)
-    return next(new ErrorResponse("Please add not less than 2 options", 400));
+    if (!req.body.options)
+      return next(new ErrorResponse("Please add not less than 2 options", 400));
 
-  if (!req.body.owner) {
-    return next(new ErrorResponse("You have to login / signup to create a poll", 400));
+    if (!req.body.owner) {
+      return next(new ErrorResponse("You have to login / signup to create a poll", 400));
+    }
+
+    if (req.body.options.length < 2)
+      return next(new ErrorResponse("Please add not less than 2 options", 400));
+
+    const poll = await Poll.create({
+      question: req.body.question,
+      options: req.body.options,
+      owner: req.body.owner.name.trim(),
+      class: req.body.class.trim(),
+      house: req.body.house.trim()
+    });
+
+    console.log(poll);
+
+    res.status(200).json({
+      success: true,
+      data: poll,
+    });
+  } catch (err) {
+    next(err);
   }
-
-  if (req.body.options.length < 2)
-    return next(new ErrorResponse("Please add not less than 2 options", 400));
-
-  const poll = await Poll.create({
-    question: req.body.question,
-    options: req.body.options,
-    owner: req.body.owner.name.trim().toLowerCase(),
-    class: req.body.class.trim().toLowerCase(),
-    house: req.body.house.trim().toLowerCase()
-  });
-
-  console.log(poll);
-
-  res.status(200).json({
-    success: true,
-    data: poll,
-  });
 };
 
 module.exports.get_user = async function (req, res, next) {
@@ -74,7 +78,7 @@ module.exports.get_user = async function (req, res, next) {
 
   console.log(user.name);
   res.status(200).json({
-    name: user.name,
+    user: user
   });
 };
 
@@ -108,8 +112,8 @@ module.exports.myPolls = async function (req, res, next) {
   // const Polls = [];
 
   const pollsAll = await Poll.find({
-    class: "n/a",
-    house: "n/a"
+    class: "N/A",
+    house: "N/A"
   });
 
   const pollsClass = await Poll.find({

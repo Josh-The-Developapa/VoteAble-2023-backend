@@ -29,22 +29,26 @@ const userSchema = new Schema({
   photo: {
     type: String,
   },
-  subscription: {
-    type: String,
-    default: 'free'
-  },
-  subscriptionExpiry: {
-    type: Date,
-    default: new Date(Date.now())
-  },
+  // subscription: {
+  //   type: String,
+  //   default: 'free'
+  // },
+  // subscriptionExpiry: {
+  //   type: Date,
+  //   default: new Date(Date.now())
+  // },
   Student_ID: {
     type: String,
+    required: true
   },
   class: {
     type: String,
+    required: true
   },
   house: {
     type: String,
+    required: true
+
   },
 });
 

@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 // const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv");
-// const authRoutes = require("./src/routes/authRoutes");
+const authRoutes = require("./src/routes/authRoutes");
 const pollRoutes = require("./src/routes/router.js");
 const cors = require("cors");
 const morgan = require("morgan");
@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(helmet());
-// app.use(authRoutes);
+app.use(authRoutes);
 app.use(pollRoutes);
 app.use(errorHandler);
 
