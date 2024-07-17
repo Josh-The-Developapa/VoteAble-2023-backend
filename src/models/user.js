@@ -26,17 +26,6 @@ const userSchema = new Schema({
   resetPasswordTokenExpire: {
     type: Date,
   },
-  photo: {
-    type: String,
-  },
-  // subscription: {
-  //   type: String,
-  //   default: 'free'
-  // },
-  // subscriptionExpiry: {
-  //   type: Date,
-  //   default: new Date(Date.now())
-  // },
   Student_ID: {
     type: String,
     required: true
@@ -47,8 +36,7 @@ const userSchema = new Schema({
   },
   house: {
     type: String,
-    required: true
-
+    required: false
   },
 });
 

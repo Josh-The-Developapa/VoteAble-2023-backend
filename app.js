@@ -15,6 +15,8 @@ const ExcelJS = require('exceljs');
 const workbook = new ExcelJS.Workbook();
 const User = require('./src/models/user.js');
 const Poll = require('./src/models/polls.js');
+const xlsx = require("xlsx");
+const bcrypt = require("bcryptjs");
 
 dotenv.config({ path: "config.env" });
 app.use(
@@ -48,17 +50,6 @@ mongoose
     .catch((err) => {
         console.log(err.message);
     });
-
-// mongoose.set('strictQuery', true);
-// mongoose
-//   .connect(dbURL, {
-//     useNewUrlParser: true,
-//   })
-//   .then(() => console.log("Connected to DB"))
-//   .catch((err) => {
-//     console.log(err.message);
-//   });
-
 
 
 const PORT = process.env.PORT;

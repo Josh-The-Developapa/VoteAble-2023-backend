@@ -41,8 +41,8 @@ module.exports.createPoll = async function (req, res, next) {
       return next(new ErrorResponse("You have to login / signup to create a poll", 400));
     }
 
-    if (req.body.options.length < 2)
-      return next(new ErrorResponse("Please add not less than 2 options", 400));
+    // if (req.body.options.length < 2)
+    //   return next(new ErrorResponse("Please add not less than 2 options", 400));
 
     const poll = await Poll.create({
       question: req.body.question,
@@ -76,7 +76,11 @@ module.exports.get_user = async function (req, res, next) {
     return next(new ErrorResponse("Invalid password", 400));
   }
 
-  console.log(user.name);
+  if (!user.house) {
+    user.house = req.body.house;
+    await user.save();
+  }
+
   res.status(200).json({
     user: user
   });
