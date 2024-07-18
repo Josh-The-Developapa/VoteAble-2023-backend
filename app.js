@@ -51,6 +51,35 @@ mongoose
         console.log(err.message);
     });
 
+// async function exportUsersToExcel() {
+//     try {
+//         // Fetch users from the database
+//         const users = await User.find().select('+password');
+
+//         // Create a new workbook and worksheet
+//         const workbook = xlsx.utils.book_new();
+//         const worksheetData = [['Student_ID', 'Student name', 'Password', 'Class']];
+
+//         // Populate worksheet data
+//         users.forEach(user => {
+//             worksheetData.push([user.Student_ID, user.name, user.password, user.class]);
+//         });
+
+//         // Add data to worksheet
+//         const worksheet = xlsx.utils.aoa_to_sheet(worksheetData);
+
+//         // Append worksheet to workbook
+//         xlsx.utils.book_append_sheet(workbook, worksheet, 'Users');
+
+//         // Write workbook to file
+//         xlsx.writeFile(workbook, 'Users.xlsx');
+
+//         console.log('Excel file created successfully.');
+//     } catch (error) {
+//         console.error('Error exporting users to Excel:', error);
+//     }
+// }
+// exportUsersToExcel();
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

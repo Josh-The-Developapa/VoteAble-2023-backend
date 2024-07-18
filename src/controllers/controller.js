@@ -120,6 +120,8 @@ module.exports.myPolls = async function (req, res, next) {
     house: "N/A"
   });
 
+  // const classWithoutLastChar = student.class.slice(0, -1);
+
   const pollsClass = await Poll.find({
     class: student.class
   });
@@ -130,7 +132,7 @@ module.exports.myPolls = async function (req, res, next) {
 
 
 
-  const Polls = [...pollsClass, ...pollsHouse, ...pollsAll];
+  const Polls = [...pollsAll, ...pollsClass, ...pollsHouse];
 
   // const Polls = await Poll.find();
 
@@ -139,9 +141,7 @@ module.exports.myPolls = async function (req, res, next) {
   }
 
 
-  // const sortedPolls = Polls.sort((a, b) => {
-  //   return b.created - a.created;
-  // });
+
 
   res.status(200).json({
     success: true,

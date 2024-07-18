@@ -67,5 +67,42 @@ const createUsersFromExcel = async (filePath) => {
     console.log("User accounts created successfully!");
 };
 
-// Example usage
-createUsersFromExcel('path-to-your-file').catch(console.error);
+
+
+/**
+ * Export users to an Excel file.
+ * Fetches users from the database, creates a new workbook and worksheet,
+ * populates the worksheet with user data, appends the worksheet to the workbook,
+ * and writes the workbook to a file named 'Users.xlsx'.
+ * If an error occurs, the error is logged to the console.
+ */
+async function exportUsersToExcel() {
+    try {
+        // Fetch users from the database
+        const users = await User.find().select('+password');
+
+        // Create a new workbook and worksheet
+        const workbook = xlsx.utils.book_new();
+
+        // Initialize worksheet data with headers
+        const worksheetData = [['Student_ID', 'Student name', 'Password']];
+
+        // Populate worksheet data with user data
+        users.forEach(user => {
+            worksheetData.push([user.Student_ID, user.name, user.password]);
+        });
+
+        // Convert worksheet data to worksheet
+        const worksheet = xlsx.utils.aoa_to_sheet(worksheetData);
+
+        // Append worksheet to workbook
+        xlsx.utils.book_append_sheet(workbook, worksheet, 'Users');
+
+        // Write workbook to file
+        xlsx.writeFile(workbook, 'Users.xlsx');
+
+        console.log('Excel file created successfully.');
+    } catch (error) {
+        console.error('Error exporting users to Excel:', error);
+    }
+}
