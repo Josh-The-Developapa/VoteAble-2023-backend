@@ -50,7 +50,6 @@ const pollSchema = new Schema({
   },
   importance: {
     type: Number,
-    required: true,
   },
 });
 
