@@ -48,6 +48,10 @@ const pollSchema = new Schema({
     type: String,
     required: true,
   },
+  importance: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Poll = mongoose.model("Poll", pollSchema);

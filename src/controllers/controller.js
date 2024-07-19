@@ -88,9 +88,7 @@ module.exports.get_user = async function (req, res, next) {
 
 // Complete
 module.exports.myPolls = async function (req, res, next) {
-
   const student = await User.findOne({ Student_ID: req.body.Student_ID }).select("+password");
-
 
   if (student == null) {
     return next(new ErrorResponse("Student account does not exist", 401));
@@ -98,29 +96,14 @@ module.exports.myPolls = async function (req, res, next) {
 
   const isMatch = student.password.trim() == `${ req.body.password }`.trim();
 
-
   if (!isMatch) {
     return next(new ErrorResponse("Invalid Student password", 401));
   }
-
-  // if(req.body.name !== student.name || req.body.password !== student.password)
-
-  // if (!req.body.class || req.body.class == null) {
-  //   return next(new ErrorResponse("Please enter a class", 401));
-  // }
-
-  // if (!req.body.house || req.body.house == null) {
-  //   return next(new ErrorResponse("Please enter a house", 401));
-  // }
-
-  // const Polls = [];
 
   const pollsAll = await Poll.find({
     class: "N/A",
     house: "N/A"
   });
-
-  // const classWithoutLastChar = student.class.slice(0, -1);
 
   const pollsClass = await Poll.find({
     class: student.class
@@ -130,18 +113,13 @@ module.exports.myPolls = async function (req, res, next) {
     house: student.house
   });
 
-
-
   const Polls = [...pollsAll, ...pollsClass, ...pollsHouse];
-
-  // const Polls = await Poll.find();
 
   if (Polls.length == 0) {
     return next(new ErrorResponse("No polls found", 404));
   }
 
-
-
+  // Sort polls by the 'importance' attribute in ascending order
 
   res.status(200).json({
     success: true,
@@ -149,6 +127,7 @@ module.exports.myPolls = async function (req, res, next) {
     student: student
   });
 };
+
 
 // Complete
 module.exports.findPoll = async function (req, res, next) {
